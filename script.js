@@ -100,6 +100,10 @@ function bubbleSort() {
 }
 
 function binarySearch() {
+  //Will jump out if the array is already empty
+if(allClassesArray.length == 0) {
+  return false;
+}
   lower = 0;
   upper = allClassesArray.length - 1;
   foundIt = false;
@@ -129,7 +133,6 @@ function binarySearch() {
     return positionFound - 1;
   } else {
     return false;
-    return;
   }
 }
 
