@@ -182,6 +182,11 @@ function addNewStudent() {
 
 //This function deletes the last row of the input table
 function removeLastStudent(table) {
+  function removeLastStudent(table) {
+  confirmation = confirm(
+    "Are you sure you want to delete this student?"
+  );
+  if (confirmation) {
   if (document.getElementById(table).rows.length > 2) {
     document.getElementById(table).deleteRow(-1);
   } else if (document.getElementById(table).rows.length == 2) {
@@ -192,6 +197,7 @@ function removeLastStudent(table) {
         "white";
     }
   }
+}
 }
 
 //PAGE3 - This function will save the list of students that the user entered into an array
