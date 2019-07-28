@@ -182,7 +182,6 @@ function addNewStudent() {
 
 //This function deletes the last row of the input table
 function removeLastStudent(table) {
-  function removeLastStudent(table) {
   confirmation = confirm(
     "Are you sure you want to delete this student?"
   );
