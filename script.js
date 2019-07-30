@@ -265,7 +265,7 @@ function checkTableFilled(table) {
         checkFilled = false;
       } else if (
         c == 2 &&
-        !Number.isInteger(Number(table.rows[r].cells[c].childNodes[0].value))
+        ((!Number.isInteger(Number(table.rows[r].cells[c].childNodes[0].value))) || (Number(table.rows[r].cells[c].childNodes[0].value) < 1))
       ) {
         //Checks if rank is an integer
         table.rows[r].cells[c].style.backgroundColor = "red";
