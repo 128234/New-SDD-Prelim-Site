@@ -28,6 +28,7 @@ function goToPage(page) {
   page.style.display = "block";
 }
 
+//This function will clear all values in the input table
 function clearInputTable() {
   while (document.getElementById("studentListTable").rows.length > 2) {
     document.getElementById("studentListTable").deleteRow(-1);
@@ -45,7 +46,7 @@ function clearInputTable() {
 
 //This function will load already saved classes
 function loadClass() {
-  bubbleSort();
+  insertionSort();
   index = binarySearch();
 
   if (index === false) {
@@ -75,7 +76,9 @@ function loadClass() {
   goToPage(page3);
 }
 
-function bubbleSort() {
+
+//This insertion sort is utilised with the binary search when loading saved classes
+function insertionSort() {
   //The following lines display the insertion sort algorithm which sorts the array
   tempArray = allClassesArray;
   first = 0;
@@ -99,6 +102,7 @@ function bubbleSort() {
   return;
 }
 
+//This binary search is used to find and load saved classes
 function binarySearch() {
   //Will jump out if the array is already empty
 if(allClassesArray.length == 0) {
@@ -136,7 +140,7 @@ if(allClassesArray.length == 0) {
   }
 }
 
-//Function TO CHECK THAT NAME ENTERED IS UNIQUE
+//Function to check that the class name entered is unique
 function checkClassName() {
   isNameUnique = "true";
   if (classNameInput.value === "") {
@@ -155,11 +159,8 @@ function checkClassName() {
   return [isNameUnique, i];
 }
 
-//PAGE3 - This function will add a new row to the table for the user to enter
-//var studentID = -1; //useless at the moment
+//This function will add a new row to the table for the user to enter - (page 3)
 function addNewStudent() {
-  //studentID += 1; //useless
-
   //Creates a new row and splits it into 3 cells
   row = document.getElementById("studentListTable").insertRow(-1);
   cell0 = row.insertCell(0);
@@ -170,11 +171,7 @@ function addNewStudent() {
   inputElement0 = document.createElement("input");
   inputElement1 = document.createElement("input");
   inputElement2 = document.createElement("input");
-  /*Useless code for now
-  inputElement0.id = "fName" + studentID.toString();
-  inputElement1.id = "sName" + studentID.toString();
-  inputElement2.id = "rank" + studentID.toString();
-  */
+
   cell0.appendChild(inputElement0);
   cell1.appendChild(inputElement1);
   cell2.appendChild(inputElement2);
@@ -198,8 +195,7 @@ function removeLastStudent(table) {
   }
 }
 }
-
-//PAGE3 - This function will save the list of students that the user entered into an array
+//This function will save the list of students that the user entered into an array - (page 3)
 function saveClass() {
   //This function will give the entered class a name and check whether it is unique or not
   isNameUniqueArray = checkClassName();
@@ -253,7 +249,7 @@ function saveClass() {
   disableInputBox();
 }
 
-//PAGE3 - Used in the saveClass function to check if all cells are entered
+//Used in the saveClass function to check if all cells are entered - (page 3)
 function checkTableFilled(table) {
   checkFilled = true;
   //Loop will iterate through each cell to determined if it filled or not
@@ -278,7 +274,7 @@ function checkTableFilled(table) {
   return checkFilled;
 }
 
-//PAGE4 & PAGE5 - This will create a table to be display the students entered into the array
+//This will create a table to be display the students entered into the array - (page 4&5)
 function createTable(tableName) {
   //This will clear all existing values in the table
   while (document.getElementById(tableName).rows.length > 1) {
@@ -296,7 +292,7 @@ function createTable(tableName) {
   }
 }
 
-//PAGE4 - This will split the class into the groups assigned by the user
+//This will split the class into the groups assigned by the user - (page 4)
 function divideClass() {
   //DEFINING VARIABLES:
   //Booleans to show which radio button is selected - jQuery
@@ -535,7 +531,7 @@ function divideClass() {
   //if(chosenClassArray.length%)
 }
 
-//PAGE4 - Disable other input box when typing
+//Disable other input box when typing - (page 4)
 function disableInputBox() {
   //Booleans to show which radio button is selected
   isItByGroupsBtn = $("#byGroupsBtn").prop("checked");
@@ -559,7 +555,7 @@ function disableInputBox() {
   document.getElementById("numStudentsInput").value = "";
 }
 
-//PAGE5 - Will sort and divide class into groups determined by teacher
+//Will sort and divide class into groups determined by teacher - (page 5)
 function sortClass(method) {
   groupedClassArray = [];
   //This switch statement will determine which type of sort will be run
@@ -707,7 +703,7 @@ function randomSortClass() {
   return tempArray;
 }
 
-//Will save class and go back to beginning
+//This function will save the class to a global array as well as local storage
 function saveSession() {
   allClassesArray.push(tempClassStore[0]);
   localStorage.setItem("allClassesArray", JSON.stringify(allClassesArray));
@@ -727,6 +723,7 @@ function saveSession() {
   goToPage(page2);
 }
 
+//This function will display the names of all saved existing classes in the user's local storage
 function displaySavedClasses() {
   while (document.getElementById("displaySavedClassesTable").rows.length > 0) {
     document.getElementById("displaySavedClassesTable").deleteRow(-1);
@@ -753,6 +750,7 @@ function displaySavedClasses() {
   document.getElementById("hideAllClassesBtn").style.display = "inline";
 }
 
+//This function will allow the user to delete previously saved classes from local storage
 function deleteSavedClass(className) {
   className = className.slice(9);
   confirmation = confirm(
@@ -770,6 +768,7 @@ function deleteSavedClass(className) {
   }
 }
 
+//This function will reset the home screen whenever it is opened
 function resetHome() {
   while (document.getElementById("displaySavedClassesTable").rows.length > 0) {
     document.getElementById("displaySavedClassesTable").deleteRow(-1);
