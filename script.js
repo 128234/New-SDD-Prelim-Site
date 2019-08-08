@@ -160,9 +160,9 @@ function checkClassName() {
 }
 
 //This function will add a new row to the table for the user to enter - (page 3)
-function addNewStudent() {
+function addNewStudent(table) {
   //Creates a new row and splits it into 3 cells
-  row = document.getElementById("studentListTable").insertRow(-1);
+  row = document.getElementById(table).insertRow(-1);
   cell0 = row.insertCell(0);
   cell1 = row.insertCell(1);
   cell2 = row.insertCell(2);
@@ -294,7 +294,7 @@ function createTable(tableName) {
 
 //This will split the class into the groups assigned by the user - (page 4)
 function divideClass() {
-  //DEFINING VARIABLES:
+  //Defining Variables:
   //Booleans to show which radio button is selected - jQuery
   isItByGroupsBtn = $("#byGroupsBtn").prop("checked");
   isItByStudentsBtn = $("#byStudentsBtn").prop("checked");
@@ -307,8 +307,8 @@ function divideClass() {
 
   //This if statement will clear the output when the user changes the input
   if (
-    (numOfGroups == 0 && isItByGroupsBtn == true) ||
-    (numOfStudents == 0 && isItByStudentsBtn == true)
+    ((numOfGroups == 0 || isNaN(numOfGroups)) && isItByGroupsBtn == true) ||
+    ((numOfStudents == 0 || isNaN(numOfStudents))&& isItByStudentsBtn == true)
   ) {
     classDivideFeedback.innerHTML = "";
     document.getElementById("numGroupsInput").value = "";
@@ -323,7 +323,6 @@ function divideClass() {
       //Case when an equal number of students per group is possible
       if (chosenClassArray.length % numOfGroups == 0) {
         numOfStudents = chosenClassArray.length / numOfGroups;
-        //NOT NEEDED - document.getElementById("numStudentsInput").value = numOfStudents;
 
         //This will assign to the global variable that equal groups are possible
         groupDetailsObject.equalGroups = true;
@@ -434,7 +433,6 @@ function divideClass() {
       //Equal groups are possible
       if (chosenClassArray.length % numOfStudents == 0) {
         numOfGroups = chosenClassArray.length / numOfStudents;
-        //NOT NEEDED - document.getElementById("numGroupsInput").value = numOfGroups;
 
         //This will assign to the global variable that equal groups are possible
         groupDetailsObject.equalGroups = true;
@@ -469,7 +467,7 @@ function divideClass() {
           classDivideFeedback.innerHTML =
             "The values provided are unable to generate a group as there are not enough students in the class.";
         } else {
-          //SPLIT INTO UNEQUAL GROUPS
+          //Split into unequal groups
           numOfRemainingStudents = chosenClassArray.length % numOfStudents;
           numOfGroups = Math.ceil(chosenClassArray.length / numOfStudents);
           numOfRemainingGroups = 1;
@@ -520,15 +518,13 @@ function divideClass() {
         }
       }
     }
-    //GLOBAL VARIABLES FOR CLASSES TO ACCESS IN SORTCLASS FUNCTION
+    //Global variables for classes to access in sortclass function
     groupDetailsObject.numGroupsA = numOfGroups;
     groupDetailsObject.numStudentsA = numOfStudents;
     groupDetailsObject.numGroupsB = numOfRemainingGroups;
     groupDetailsObject.numStudentsB = numOfRemainingStudents;
   }
-  /**/
-  //alert(byStudentsButton.checked.value)
-  //if(chosenClassArray.length%)
+  
 }
 
 //Disable other input box when typing - (page 4)
@@ -556,10 +552,10 @@ function disableInputBox() {
 }
 
 //Will sort and divide class into groups determined by teacher - (page 5)
-function sortClass(method) {
+function sortClass(sortMethod) {
   groupedClassArray = [];
   //This switch statement will determine which type of sort will be run
-  switch (method) {
+  switch (sortMethod) {
     case "sortAlphaLastname":
       sortedArray = alphaSortClass("lastName");
       break;
@@ -640,7 +636,7 @@ function alphaSortClass(name) {
 }
 
 //Function to sort class by each student's rank
-function rankSortClass(method) {
+function rankSortClass(rankMethod) {
   tempArray = chosenClassArray;
   first = 0;
   last = tempArray.length - 1;
@@ -661,7 +657,7 @@ function rankSortClass(method) {
     positionOfNext -= 1;
   }
   //This will sort the array so that it will be a mixed class
-  if (method == "mixed") {
+  if (rankMethod == "mixed") {
     halfArrayLength = Math.ceil(tempArray.length / 2);
     endOfTempArray = tempArray.slice(halfArrayLength);
     endOfTempArray.reverse();
