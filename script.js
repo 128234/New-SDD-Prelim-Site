@@ -203,7 +203,7 @@ function saveClass() {
     case "blank":
       alert("Please enter a name for your class");
       return;
-      break;
+
     case "false":
       if (
         !confirm(
@@ -211,7 +211,7 @@ function saveClass() {
         )
       ) {
         return;
-        break;
+
       } else {
         allClassesArray.splice(isNameUniqueArray[1], 1);
       }
